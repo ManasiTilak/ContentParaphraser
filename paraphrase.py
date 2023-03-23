@@ -13,17 +13,26 @@ nltk.download('punkt')
 #Initialising parrot
 parrot = Parrot()
 
-paragraph = input("Enter text to paraphrase")
+#User Input
+paragraph = input("Enter Text to ParaPhrase")
 
-
+#Spliting paragraph into sentences
 phrases = sent_tokenize(paragraph)
-print(phrases)
 
-#Paraphrasing
+#Paraphrasing and adding the paraphrased lines to para[]
+para = []
 for phrase in phrases:
-        print("-"*100)
-        print("Input_phrase: ", phrase)
-        print("-"*100)
-        para_phrases = parrot.augment(input_phrase=phrase)
-        for para_phrase in para_phrases:
-            print(para_phrase)
+    para_phrase = parrot.augment(input_phrase=phrase, max_return_phrases = 1)
+    print(para_phrase)
+    if para_phrase:         
+        new_line = (para_phrase[0][0]).capitalize()
+        if new_line.endswith('.'):
+            para.append(new_line)
+        else:
+            para.append(new_line+".")
+    else:
+        para.append(phrase)
+
+#Putting lines in para[] together to form a paragraph
+output_para= [' '.join(x for x in para)]
+print(output_para)
